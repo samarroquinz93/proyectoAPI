@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Comunidad Reporta</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f4f4;
+padding:40px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+color:#1d3557;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+margin-top:15px;
+padding:10px 20px;
+background:#1d3557;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.card{
+background:#f1f1f1;
+padding:15px;
+margin-top:15px;
+border-radius:10px;
+}
+
+a{
+text-decoration:none;
+margin-right:15px;
+font-weight:bold;
+}
+
+.editar{
+color:#0077cc;
+}
+
+.eliminar{
+color:red;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📍 Comunidad Reporta</h1>
+
+<form action="/crear" method="post">
+
+<input type="text" name="titulo" placeholder="Título" required>
+
+<input type="text" name="descripcion" placeholder="Descripción" required>
+
+<input type="text" name="ubicacion" placeholder="Ubicación" required>
+
+<button type="submit">Crear Reporte</button>
+
+</form>
+
+<hr>
+
+{% for r in reportes %}
+
+<div class="card">
+
+<h3>{{r.titulo}}</h3>
+
+<p>{{r.descripcion}}</p>
+
+<p><b>Ubicación:</b> {{r.ubicacion}}</p>
+
+<p><b>Estado:</b> {{r.estado}}</p>
+
+<a class="editar" href="/editar/{{r.id}}">Editar</a>
+
+<a class="eliminar" href="/eliminar/{{r.id}}">Eliminar</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

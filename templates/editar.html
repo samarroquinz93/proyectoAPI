@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Editar Reporte</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f4f4;
+padding:40px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+}
+
+input, select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+margin-top:15px;
+padding:10px 20px;
+background:#1d3557;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Editar Reporte</h1>
+
+<form method="post">
+
+<input type="text" name="titulo" value="{{reporte.titulo}}" required>
+
+<input type="text" name="descripcion" value="{{reporte.descripcion}}" required>
+
+<input type="text" name="ubicacion" value="{{reporte.ubicacion}}" required>
+
+<select name="estado">
+
+<option>Pendiente</option>
+<option>En proceso</option>
+<option>Resuelto</option>
+
+</select>
+
+<button type="submit">Guardar Cambios</button>
+
+</form>
+
+</div>
+
+</body>
+</html>
