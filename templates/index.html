@@ -1,16 +1,13 @@
-from flask import Flask, render_template_string, request, redirect
-
-app = Flask(__name__)
-
-reportes = []
-
-html = """
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>Comunidad Reporta</title>
 
 <style>
@@ -22,36 +19,87 @@ padding:40px;
 }
 
 .container{
-max-width:800px;
+max-width:900px;
 margin:auto;
 background:white;
 padding:30px;
 border-radius:15px;
 }
 
-input, textarea, select{
+h1{
+text-align:center;
+color:#1d3557;
+}
+
+input,
+textarea,
+select{
+
 width:100%;
-padding:10px;
+padding:12px;
 margin:10px 0;
 border-radius:8px;
 border:1px solid #ccc;
+
 }
 
 button{
-padding:10px;
-background:#1d3557;
-color:white;
+
+padding:10px 20px;
 border:none;
 border-radius:8px;
 cursor:pointer;
+background:#1d3557;
+color:white;
+
 }
 
 .card{
+
+padding:20px;
 background:#f8f8f8;
-padding:15px;
-margin-top:20px;
 border-left:5px solid #1d3557;
+margin-top:20px;
 border-radius:10px;
+transition:0.3s;
+
+}
+
+.card:hover{
+transform:scale(1.02);
+}
+
+.editar{
+
+background:#0077cc;
+padding:8px;
+color:white;
+border-radius:5px;
+text-decoration:none;
+
+}
+
+.eliminar{
+
+background:red;
+padding:8px;
+color:white;
+border-radius:5px;
+
+}
+
+.pendiente{
+background:orange;
+padding:5px;
+border-radius:5px;
+color:white;
+}
+
+.resuelto{
+background:green;
+padding:5px;
+border-radius:5px;
+color:white;
 }
 
 </style>
@@ -66,16 +114,40 @@ border-radius:10px;
 
 <form action="/crear" method="post">
 
-<input type="text" name="titulo" placeholder="Título" required>
+<input type="text"
+name="titulo"
+placeholder="Título"
+required>
 
-<textarea name="descripcion" placeholder="Descripción" required></textarea>
+<textarea
+name="descripcion"
+placeholder="Descripción"
+required>
+</textarea>
 
-<input type="text" name="ubicacion" placeholder="Ubicación" required>
+<input type="text"
+name="ubicacion"
+placeholder="Ubicación"
+required>
+
+<select name="categoria">
+
+<option>Basura</option>
+<option>Seguridad</option>
+<option>Agua</option>
+<option>Alumbrado</option>
+
+</select>
 
 <select name="estado">
 
-<option>Pendiente</option>
-<option>Resuelto</option>
+<option value="pendiente">
+Pendiente
+</option>
+
+<option value="resuelto">
+Resuelto
+</option>
 
 </select>
 
@@ -85,6 +157,8 @@ Crear Reporte
 
 </form>
 
+<hr>
+
 {% for r in reportes %}
 
 <div class="card">
@@ -93,9 +167,61 @@ Crear Reporte
 
 <p>{{r.descripcion}}</p>
 
-<p><b>📍 Ubicación:</b> {{r.ubicacion}}</p>
+<p>
 
-<p><b>Estado:</b> {{r.estado}}</p>
+📍 <b>Ubicación:</b>
+{{r.ubicacion}}
+
+</p>
+
+<p>
+
+📂 <b>Categoría:</b>
+{{r.categoria}}
+
+</p>
+
+<p>
+
+📅 <b>Fecha:</b>
+{{r.fecha}}
+
+</p>
+
+<p>
+
+<b>Estado:</b>
+
+<span class="{{r.estado}}">
+{{r.estado}}
+</span>
+
+</p>
+
+<br>
+
+<a
+class="editar"
+href="/editar/{{r.id}}">
+
+✏ Editar
+
+</a>
+
+<form
+action="/eliminar/{{r.id}}"
+method="post"
+style="display:inline;">
+
+<button
+class="eliminar"
+onclick="return confirm('¿Eliminar reporte?')">
+
+🗑 Eliminar
+
+</button>
+
+</form>
 
 </div>
 
@@ -105,27 +231,3 @@ Crear Reporte
 
 </body>
 </html>
-
-"""
-
-@app.route("/")
-def inicio():
-    return render_template_string(html, reportes=reportes)
-
-@app.route("/crear", methods=["POST"])
-def crear():
-
-    reporte = {
-
-        "titulo": request.form["titulo"],
-        "descripcion": request.form["descripcion"],
-        "ubicacion": request.form["ubicacion"],
-        "estado": request.form["estado"]
-
-    }
-
-    reportes.append(reporte)
-
-    return redirect("/")
-
-app.run(debug=True)
