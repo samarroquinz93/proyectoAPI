@@ -4,6 +4,10 @@
 <head>
 
 <meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>Editar reporte</title>
 
 <style>
@@ -23,28 +27,60 @@ margin:auto;
 background:white;
 padding:30px;
 border-radius:15px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
 
 }
 
-input,select{
+h2{
+
+text-align:center;
+color:#1d3557;
+
+}
+
+input,
+textarea,
+select{
 
 width:100%;
-padding:10px;
+padding:12px;
 margin-top:10px;
 border-radius:8px;
 border:1px solid #ccc;
 
 }
 
+textarea{
+height:100px;
+resize:none;
+}
+
 button{
 
 margin-top:15px;
-padding:10px;
+padding:12px;
 width:100%;
 background:#1d3557;
 color:white;
 border:none;
 border-radius:8px;
+cursor:pointer;
+font-size:16px;
+
+}
+
+button:hover{
+background:#16324f;
+}
+
+.volver{
+
+display:block;
+text-align:center;
+margin-top:15px;
+text-decoration:none;
+color:#1d3557;
+font-weight:bold;
 
 }
 
@@ -56,7 +92,7 @@ border-radius:8px;
 
 <div class="container">
 
-<h2>Editar reporte</h2>
+<h2>✏ Editar reporte</h2>
 
 <form action="/editar/{{reporte.id}}" method="post">
 
@@ -66,11 +102,9 @@ name="titulo"
 value="{{reporte.titulo}}"
 required>
 
-<input
-type="text"
+<textarea
 name="descripcion"
-value="{{reporte.descripcion}}"
-required>
+required>{{reporte.descripcion}}</textarea>
 
 <input
 type="text"
@@ -78,24 +112,39 @@ name="ubicacion"
 value="{{reporte.ubicacion}}"
 required>
 
+<select name="categoria">
+
+<option {% if reporte.categoria=="Basura" %}selected{% endif %}>
+Basura
+</option>
+
+<option {% if reporte.categoria=="Seguridad" %}selected{% endif %}>
+Seguridad
+</option>
+
+<option {% if reporte.categoria=="Agua" %}selected{% endif %}>
+Agua
+</option>
+
+<option {% if reporte.categoria=="Alumbrado" %}selected{% endif %}>
+Alumbrado
+</option>
+
+</select>
+
 <select name="estado">
 
 <option
-value="Pendiente">
+value="pendiente"
+{% if reporte.estado=="pendiente" %}selected{% endif %}>
 
 Pendiente
 
 </option>
 
 <option
-value="En proceso">
-
-En proceso
-
-</option>
-
-<option
-value="Resuelto">
+value="resuelto"
+{% if reporte.estado=="resuelto" %}selected{% endif %}>
 
 Resuelto
 
@@ -105,11 +154,17 @@ Resuelto
 
 <button type="submit">
 
-Guardar cambios
+💾 Guardar cambios
 
 </button>
 
 </form>
+
+<a class="volver" href="/">
+
+⬅ Volver al inicio
+
+</a>
 
 </div>
 
