@@ -1,172 +1,332 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar reporte — Comunidad Reporta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --frosted-mint: #d8f3dcff;
+      --celadon: #b7e4c7ff;
+      --celadon-2: #95d5b2ff;
+      --mint-leaf: #74c69dff;
+      --mint-leaf-2: #52b788ff;
+      --sea-green: #40916cff;
+      --dark-emerald: #2d6a4fff;
+      --pine-teal: #1b4332ff;
+      --evergreen: #081c15ff;
+    }
 
-<meta charset="UTF-8">
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--frosted-mint);
+      background-image:
+        radial-gradient(ellipse 60% 50% at 15% -5%, rgba(116,198,157,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 90% 105%, rgba(27,67,50,0.10) 0%, transparent 70%);
+      min-height: 100vh;
+      color: var(--evergreen);
+    }
 
-<title>Editar reporte</title>
+   
+    .header {
+      background: linear-gradient(140deg, var(--pine-teal) 0%, var(--dark-emerald) 100%);
+      padding: 40px 0 56px;
+      position: relative;
+      overflow: hidden;
+    }
 
-<style>
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -70px; right: -70px;
+      width: 250px; height: 250px;
+      border-radius: 50%;
+      border: 2px solid rgba(216,243,220,0.07);
+    }
 
-body{
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; left: 5%;
+      width: 170px; height: 170px;
+      border-radius: 50%;
+      border: 1px solid rgba(116,198,157,0.10);
+    }
 
-font-family:Arial;
-background:#eef2f7;
-padding:40px;
+    .header-inner {
+      max-width: 740px;
+      margin: auto;
+      padding: 0 32px;
+      position: relative;
+      z-index: 1;
+    }
 
-}
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--mint-leaf);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      opacity: 0.85;
+      transition: opacity 0.18s, gap 0.18s;
+    }
 
-.container{
+    .back-link:hover { opacity: 1; gap: 10px; }
 
-max-width:700px;
-margin:auto;
-background:white;
-padding:30px;
-border-radius:15px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
+    .header-eyebrow {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--celadon-2);
+      margin-bottom: 8px;
+    }
 
-}
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--frosted-mint);
+      letter-spacing: -0.4px;
+    }
 
-h2{
+    .header-sub {
+      color: var(--celadon);
+      font-size: 0.85rem;
+      margin-top: 7px;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+    }
 
-text-align:center;
-color:#1d3557;
+    
+    .main {
+      max-width: 740px;
+      margin: -30px auto 64px;
+      padding: 0 32px;
+    }
 
-}
+    
+    .form-card {
+      background: white;
+      border-radius: 18px;
+      padding: 38px;
+      box-shadow: 0 6px 36px rgba(8,28,21,0.10);
+      border: 1px solid var(--celadon);
+    }
 
-input,
-textarea,
-select{
+    .form-section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:8px;
-border:1px solid #ccc;
+    .form-section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--celadon);
+    }
 
-}
+    .field {
+      margin-bottom: 18px;
+    }
 
-textarea{
-height:100px;
-resize:none;
-}
+    .field:last-of-type { margin-bottom: 0; }
 
-button{
+    label {
+      display: block;
+      font-size: 0.70rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--dark-emerald);
+      margin-bottom: 6px;
+    }
 
-margin-top:15px;
-padding:12px;
-width:100%;
-background:#1d3557;
-color:white;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-size:16px;
+    input, textarea, select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--celadon);
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--evergreen);
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
 
-}
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--mint-leaf);
+      box-shadow: 0 0 0 3px rgba(116,198,157,0.20);
+    }
 
-button:hover{
-background:#16324f;
-}
+    textarea { height: 100px; resize: vertical; }
 
-.volver{
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%232d6a4f' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
 
-display:block;
-text-align:center;
-margin-top:15px;
-text-decoration:none;
-color:#1d3557;
-font-weight:bold;
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
 
-}
+    .form-row .field { margin-bottom: 0; }
 
-</style>
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, var(--celadon), transparent);
+      margin: 26px 0;
+    }
 
+    .form-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      background: linear-gradient(135deg, var(--sea-green), var(--dark-emerald));
+      color: white;
+      border: none;
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 16px rgba(45,106,79,0.30);
+      transition: opacity 0.18s, transform 0.15s, box-shadow 0.18s;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+      box-shadow: 0 7px 20px rgba(45,106,79,0.38);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 20px;
+      background: white;
+      color: var(--dark-emerald);
+      border: 1.5px solid var(--celadon);
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.18s, border-color 0.18s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--frosted-mint);
+      border-color: var(--mint-leaf);
+    }
+
+    @media (max-width: 640px) {
+      .header { padding: 28px 0 46px; }
+      .header h1 { font-size: 1.7rem; }
+      .main { padding: 0 16px; margin-top: -26px; }
+      .form-card { padding: 26px 18px; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-actions { flex-direction: column-reverse; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+<header class="header">
+  <div class="header-inner">
+    <a class="back-link" href="/">← Volver al inicio</a>
+    <span class="header-eyebrow">Gestión de reportes</span>
+    <h1>✏ Editar reporte</h1>
+  </div>
+</header>
 
-<h2>✏ Editar reporte</h2>
+<main class="main">
+  <div class="form-card">
+    <form action="/editar/{{reporte.id}}" method="post">
 
-<form action="/editar/{{reporte.id}}" method="post">
+      <p class="form-section-label">Información del reporte</p>
 
-<input
-type="text"
-name="titulo"
-value="{{reporte.titulo}}"
-required>
+      <div class="field">
+        <label>Título</label>
+        <input type="text" name="titulo" value="{{reporte.titulo}}" required>
+      </div>
 
-<textarea
-name="descripcion"
-required>{{reporte.descripcion}}</textarea>
+      <div class="field">
+        <label>Descripción</label>
+        <textarea name="descripcion" required>{{reporte.descripcion}}</textarea>
+      </div>
 
-<input
-type="text"
-name="ubicacion"
-value="{{reporte.ubicacion}}"
-required>
+      <div class="field">
+        <label>Ubicación</label>
+        <input type="text" name="ubicacion" value="{{reporte.ubicacion}}" required>
+      </div>
 
-<select name="categoria">
+      <div class="form-row">
+        <div class="field">
+          <label>Categoría</label>
+          <select name="categoria">
+            <option {% if reporte.categoria=="Basura" %}selected{% endif %}>Basura</option>
+            <option {% if reporte.categoria=="Seguridad" %}selected{% endif %}>Seguridad</option>
+            <option {% if reporte.categoria=="Agua" %}selected{% endif %}>Agua</option>
+            <option {% if reporte.categoria=="Alumbrado" %}selected{% endif %}>Alumbrado</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Estado</label>
+          <select name="estado">
+            <option value="pendiente" {% if reporte.estado=="pendiente" %}selected{% endif %}>Pendiente</option>
+            <option value="resuelto" {% if reporte.estado=="resuelto" %}selected{% endif %}>Resuelto</option>
+          </select>
+        </div>
+      </div>
 
-<option {% if reporte.categoria=="Basura" %}selected{% endif %}>
-Basura
-</option>
+      <div class="divider"></div>
 
-<option {% if reporte.categoria=="Seguridad" %}selected{% endif %}>
-Seguridad
-</option>
+      <div class="form-actions">
+        <a class="btn-secondary" href="/">← Cancelar</a>
+        <button type="submit" class="btn-primary">💾&nbsp; Guardar cambios</button>
+      </div>
 
-<option {% if reporte.categoria=="Agua" %}selected{% endif %}>
-Agua
-</option>
-
-<option {% if reporte.categoria=="Alumbrado" %}selected{% endif %}>
-Alumbrado
-</option>
-
-</select>
-
-<select name="estado">
-
-<option
-value="pendiente"
-{% if reporte.estado=="pendiente" %}selected{% endif %}>
-
-Pendiente
-
-</option>
-
-<option
-value="resuelto"
-{% if reporte.estado=="resuelto" %}selected{% endif %}>
-
-Resuelto
-
-</option>
-
-</select>
-
-<button type="submit">
-
-💾  Guardar cambios
-
-</button>
-
-</form>
-
-<a class="volver" href="/">
-
-⬅ Volver al inicio
-
-</a>
-
-</div>
+    </form>
+  </div>
+</main>
 
 </body>
 </html>

@@ -1,233 +1,467 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comunidad Reporta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --frosted-mint: #d8f3dcff;
+      --celadon: #b7e4c7ff;
+      --celadon-2: #95d5b2ff;
+      --mint-leaf: #74c69dff;
+      --mint-leaf-2: #52b788ff;
+      --sea-green: #40916cff;
+      --dark-emerald: #2d6a4fff;
+      --pine-teal: #1b4332ff;
+      --evergreen: #081c15ff;
+    }
 
-<meta charset="UTF-8">
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--frosted-mint);
+      background-image:
+        radial-gradient(ellipse 60% 50% at 15% -5%, rgba(116,198,157,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 90% 105%, rgba(27,67,50,0.10) 0%, transparent 70%);
+      min-height: 100vh;
+      color: var(--evergreen);
+    }
 
-<title>Comunidad Reporta</title>
+    
+    .header {
+      background: linear-gradient(140deg, var(--pine-teal) 0%, var(--dark-emerald) 100%);
+      padding: 44px 0 58px;
+      position: relative;
+      overflow: hidden;
+    }
 
-<style>
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -70px; right: -70px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      border: 2px solid rgba(216,243,220,0.08);
+    }
 
-body{
-font-family:Arial;
-background:#eef2f7;
-padding:40px;
-}
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; left: 8%;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      border: 1px solid rgba(116,198,157,0.12);
+    }
 
-.container{
-max-width:900px;
-margin:auto;
-background:white;
-padding:30px;
-border-radius:15px;
-}
+    .header-inner {
+      max-width: 900px;
+      margin: auto;
+      padding: 0 32px;
+      position: relative;
+      z-index: 1;
+    }
 
-h1{
-text-align:center;
-color:#1d3557;
-}
+    .header-eyebrow {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--mint-leaf);
+      margin-bottom: 10px;
+    }
 
-input,
-textarea,
-select{
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--frosted-mint);
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+    }
 
-width:100%;
-padding:12px;
-margin:10px 0;
-border-radius:8px;
-border:1px solid #ccc;
+    .header-sub {
+      color: var(--celadon);
+      font-size: 0.88rem;
+      margin-top: 8px;
+      font-weight: 300;
+      letter-spacing: 0.4px;
+    }
 
-}
+    
+    .main {
+      max-width: 900px;
+      margin: -32px auto 64px;
+      padding: 0 32px;
+    }
 
-button{
+    
+    .form-card {
+      background: white;
+      border-radius: 18px;
+      padding: 36px 36px 28px;
+      box-shadow: 0 6px 36px rgba(8,28,21,0.10);
+      border: 1px solid var(--celadon);
+      position: relative;
+    }
 
-padding:10px 20px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-background:#1d3557;
-color:white;
+    .form-badge {
+      display: inline-block;
+      position: absolute;
+      top: -13px; left: 28px;
+      background: var(--sea-green);
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
 
-}
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
 
-.card{
+    .form-grid .full { grid-column: 1 / -1; }
 
-padding:20px;
-background:#f8f8f8;
-border-left:5px solid #1d3557;
-margin-top:20px;
-border-radius:10px;
-transition:0.3s;
+    .field { display: flex; flex-direction: column; }
 
-}
+    label {
+      font-size: 0.70rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--dark-emerald);
+      margin-bottom: 5px;
+    }
 
-.card:hover{
-transform:scale(1.02);
-}
+    input, textarea, select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--celadon);
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--evergreen);
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
 
-.editar{
+    input::placeholder, textarea::placeholder { color: #aec6b8; }
 
-background:#0077cc;
-padding:8px;
-color:white;
-border-radius:5px;
-text-decoration:none;
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--mint-leaf);
+      box-shadow: 0 0 0 3px rgba(116,198,157,0.20);
+    }
 
-}
+    textarea { height: 88px; resize: vertical; }
 
-.eliminar{
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%232d6a4f' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
 
-background:red;
-padding:8px;
-color:white;
-border-radius:5px;
+    .form-actions {
+      margin-top: 22px;
+      display: flex;
+      justify-content: flex-end;
+    }
 
-}
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      background: linear-gradient(135deg, var(--sea-green), var(--dark-emerald));
+      color: white;
+      border: none;
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 16px rgba(45,106,79,0.30);
+      transition: opacity 0.18s, transform 0.15s, box-shadow 0.18s;
+    }
 
-.pendiente{
-background:orange;
-padding:5px;
-border-radius:5px;
-color:white;
-}
+    .btn-primary:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+      box-shadow: 0 7px 20px rgba(45,106,79,0.38);
+    }
 
-.resuelto{
-background:green;
-padding:5px;
-border-radius:5px;
-color:white;
-}
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 38px 0 20px;
+    }
 
-</style>
+    .section-header span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--pine-teal);
+      white-space: nowrap;
+    }
 
+    .section-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--celadon), transparent);
+    }
+
+    
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 22px 26px 18px;
+      margin-bottom: 14px;
+      border: 1px solid var(--celadon);
+      border-left: 4px solid var(--sea-green);
+      box-shadow: 0 2px 14px rgba(8,28,21,0.07);
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(8,28,21,0.12);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--pine-teal);
+      line-height: 1.35;
+    }
+
+    .card-desc {
+      font-size: 0.86rem;
+      color: #4d6b5c;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .meta-chip {
+      font-size: 0.74rem;
+      color: var(--dark-emerald);
+      background: var(--frosted-mint);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--celadon);
+    }
+
+    .badge {
+      flex-shrink: 0;
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .badge.pendiente {
+      background: #fef3cd;
+      color: #7d5600;
+      border: 1px solid #f5d87b;
+    }
+
+    .badge.resuelto {
+      background: var(--frosted-mint);
+      color: var(--dark-emerald);
+      border: 1px solid var(--celadon);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1px solid var(--frosted-mint);
+    }
+
+    .btn-edit {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 15px;
+      background: var(--frosted-mint);
+      color: var(--dark-emerald);
+      border: 1.5px solid var(--celadon);
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.80rem;
+      font-weight: 600;
+      transition: background 0.18s, border-color 0.18s;
+    }
+
+    .btn-edit:hover {
+      background: var(--celadon);
+      border-color: var(--mint-leaf);
+    }
+
+    .btn-delete {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 15px;
+      background: white;
+      color: #c0392b;
+      border: 1.5px solid #f5c6c2;
+      border-radius: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.80rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s;
+    }
+
+    .btn-delete:hover {
+      background: #fff0ee;
+      border-color: #e74c3c;
+    }
+
+    
+    .empty {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--dark-emerald);
+      opacity: 0.6;
+      font-size: 0.9rem;
+    }
+
+    .empty-icon { font-size: 2.5rem; margin-bottom: 10px; }
+
+   
+    @media (max-width: 640px) {
+      .header { padding: 32px 0 48px; }
+      .header h1 { font-size: 1.9rem; }
+      .main { padding: 0 16px; margin-top: -28px; }
+      .form-card { padding: 28px 18px 22px; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+<header class="header">
+  <div class="header-inner">
+    <h1>📍 Comunidad Reporta</h1>
+    <p class="header-sub">Registra y da seguimiento a los reportes</p>
+  </div>
+</header>
 
-<h1>📍 Comunidad Reporta</h1>
+<main class="main">
 
-<form action="/crear" method="post">
+  <div class="form-card">
+    <span class="form-badge">Nuevo reporte</span>
+    <form action="/crear" method="post">
+      <div class="form-grid">
 
-<input type="text"
-name="titulo"
-placeholder="Título"
-required>
+        <div class="field full">
+          <label>Título</label>
+          <input type="text" name="titulo" placeholder="Describe brevemente el problema…" required>
+        </div>
 
-<textarea
-name="descripcion"
-placeholder="Descripción"
-required>
-</textarea>
+        <div class="field full">
+          <label>Descripción</label>
+          <textarea name="descripcion" placeholder="Detalla la situación, hora, frecuencia…" required></textarea>
+        </div>
 
-<input type="text"
-name="ubicacion"
-placeholder="Ubicación"
-required>
+        <div class="field full">
+          <label>Ubicación</label>
+          <input type="text" name="ubicacion" placeholder="Calle, zona, punto de referencia…" required>
+        </div>
 
-<select name="categoria">
+        <div class="field">
+          <label>Categoría</label>
+          <select name="categoria">
+            <option>Basura</option>
+            <option>Seguridad</option>
+            <option>Agua</option>
+            <option>Alumbrado</option>
+          </select>
+        </div>
 
-<option>Basura</option>
-<option>Seguridad</option>
-<option>Agua</option>
-<option>Alumbrado</option>
+        <div class="field">
+          <label>Estado</label>
+          <select name="estado">
+            <option value="pendiente">Pendiente</option>
+            <option value="resuelto">Resuelto</option>
+          </select>
+        </div>
 
-</select>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">＋&nbsp; Crear reporte</button>
+      </div>
+    </form>
+  </div>
 
-<select name="estado">
+  
+  <div class="section-header">
+    <span>Reportes activos</span>
+  </div>
 
-<option value="pendiente">
-Pendiente
-</option>
+  {% for r in reportes %}
+  <div class="card">
+    <div class="card-top">
+      <h3>{{ r.titulo }}</h3>
+      <span class="badge {{ r.estado }}">{{ r.estado }}</span>
+    </div>
+    <p class="card-desc">{{ r.descripcion }}</p>
+    <div class="meta-row">
+      <span class="meta-chip">📍 {{ r.ubicacion }}</span>
+      <span class="meta-chip">📂 {{ r.categoria }}</span>
+      <span class="meta-chip">📅 {{ r.fecha }}</span>
+    </div>
+    <div class="card-footer">
+      <a class="btn-edit" href="/editar/{{ r.id }}">✏&nbsp; Editar</a>
+      <form style="display:inline" action="/eliminar/{{ r.id }}" method="post">
+        <button class="btn-delete" onclick="return confirm('¿Eliminar este reporte?')">
+          🗑&nbsp; Eliminar
+        </button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
 
-<option value="resuelto">
-Resuelto
-</option>
-
-</select>
-
-<button type="submit">
-Crear Reporte
-</button>
-
-</form>
-
-<hr>
-
-{% for r in reportes %}
-
-<div class="card">
-
-<h3>🚨 {{r.titulo}}</h3>
-
-<p>{{r.descripcion}}</p>
-
-<p>
-
-📍 <b>Ubicación:</b>
-{{r.ubicacion}}
-
-</p>
-
-<p>
-
-📂 <b>Categoría:</b>
-{{r.categoria}}
-
-</p>
-
-<p>
-
-📅 <b>Fecha:</b>
-{{r.fecha}}
-
-</p>
-
-<p>
-
-<b>Estado:</b>
-
-<span class="{{r.estado}}">
-{{r.estado}}
-</span>
-
-</p>
-
-<br>
-
-<a
-class="editar"
-href="/editar/{{r.id}}">
-
-✏ Editar
-
-</a>
-
-<form
-action="/eliminar/{{r.id}}"
-method="post"
-style="display:inline;">
-
-<button
-class="eliminar"
-onclick="return confirm('¿Eliminar reporte?')">
-
-🗑 Eliminar
-
-</button>
-
-</form>
-
-</div>
-
-{% endfor %}
-
-</div>
+</main>
 
 </body>
 </html>
