@@ -345,3 +345,26 @@
 
 </body>
 </html>
+<select name="categoria">
+    <option {% if reporte.categoria=="Basura" %}selected{% endif %}>Basura</option>
+    <option {% if reporte.categoria=="Seguridad" %}selected{% endif %}>Seguridad</option>
+    <option {% if reporte.categoria=="Agua" %}selected{% endif %}>Agua</option>
+    <option {% if reporte.categoria=="Alumbrado" %}selected{% endif %}>Alumbrado</option>
+</select>
+<option {% if reporte.categoria=="Baches" %}selected{% endif %}>Baches</option>
+<select name="categoria">
+    <option {% if reporte.categoria=="Basura" %}selected{% endif %}>Basura</option>
+    <option {% if reporte.categoria=="Seguridad" %}selected{% endif %}>Seguridad</option>
+    <option {% if reporte.categoria=="Agua" %}selected{% endif %}>Agua</option>
+    <option {% if reporte.categoria=="Alumbrado" %}selected{% endif %}>Alumbrado</option>
+    <option {% if reporte.categoria=="Baches" %}selected{% endif %}>Baches</option>
+</select>
+<div class="field">
+    <label>Información del bache</label>
+    <textarea name="detalle_bache" placeholder="Describa el tamaño, profundidad o cantidad de baches"></textarea>
+</div>
+<div class="field">
+    <label>Descripción</label>
+    <textarea name="descripcion" required>{{reporte.descripcion}}</textarea>
+</div>
+
